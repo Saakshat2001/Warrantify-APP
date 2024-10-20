@@ -6,8 +6,14 @@ import { CommonActions } from '@react-navigation/native';
 import { useTheme } from '@/theme';
 import { Brand } from '@/components/molecules';
 import { SafeScreen } from '@/components/template';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
+import { log } from 'console';
+
 function Startup({ navigation }) {
     const { layout, gutters, fonts } = useTheme();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const { t } = useTranslation(['startup']);
     const { isSuccess, isFetching, isError } = useQuery({
         queryKey: ['startup'],
@@ -16,11 +22,34 @@ function Startup({ navigation }) {
         },
     });
     useEffect(() => {
-        if (isSuccess) {
+        const checkLoginStatus = async () => {
+            const loggedIn = await AsyncStorage.getItem('isLoggedIn');
+            console.log('logged in is ***************' , typeof(loggedIn));
+            
+            setIsLoggedIn(loggedIn);
+            console.log('^^^^^^^^^^^^^^^^^^^^');
+            
+            if(loggedIn === 'true'){
+                console.log('aaya +++++++=');
+                
+                navigation.dispatch(CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: 'MainDashboard' }],
+                }));
+            }
+            else{
+                console.log('aaya +++++++= in else ');
             navigation.dispatch(CommonActions.reset({
                 index: 0,
-                routes: [{ name: 'Example' }],
+                routes: [{ name: 'Walkthrough' }],
             }));
+        }
+            setLoading(false);
+          };
+      
+        if (isSuccess) {
+            checkLoginStatus();
+            console.log('setIsLoggedIn --------->>>>>>>>>>>>>>>>>>>>> ', setIsLoggedIn );
         }
     }, [isSuccess]);
     return (<SafeScreen>
