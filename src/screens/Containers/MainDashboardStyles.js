@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
         fontSize: 25, 
         color: '#000000',
         marginLeft:20,
-        fontWeight: 'bold',
+        fontWeight: '600',
+        //fontWeight: 'bold',
         textAlign: 'flex-start', // Center the text
         flex: 1, // Allow the title to take up space
       },
@@ -144,6 +145,37 @@ const styles = StyleSheet.create({
         borderTopColor: '#ccc',
         paddingBottom: 25,
         zIndex: 1, // Control stacking order
+    },
+    flatListContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    card: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 10,
+      padding: 10,
+      backgroundColor: '#ffffff',
+      borderRadius: 10,
+      width: '40%',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 3,
+      elevation: 5,
+    },
+    image: {
+      width: 80,
+      height: 80,
+      resizeMode: 'contain',
+      marginBottom: 10,
+    },
+    cardText: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: '#007BFF', // Blue color text for "Air Conditioner"
+      textAlign: 'center',
     },
   });
   export default styles;

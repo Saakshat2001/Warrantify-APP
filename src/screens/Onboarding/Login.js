@@ -8,6 +8,7 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux';
+import { ApiEndpoints } from '@/Globals/ApiEndpoints';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ const Login = ({ navigation }) => {
        console.log('obj ++++++++++++++++ ',obj);
        //10.0.2.2:3000
       // dispatch(signInStart());
-      const res = await fetch("http://192.168.8.242:3000/api/auth/login", {
+      const res = await fetch(`${ApiEndpoints.signInApi}` , {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(obj),
@@ -62,7 +63,7 @@ const Login = ({ navigation }) => {
         navigation.navigate("MainDashboard");
       }
     } catch (error) {
-      console.log('here in catch');
+      console.log('here in catch of Login js');
       
       setErrorMessage(error.message);
       // setLoading(false);

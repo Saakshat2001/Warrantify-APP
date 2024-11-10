@@ -3,12 +3,12 @@ import React from 'react';
 import { View, Text, TextInput,TouchableOpacity,KeyboardAvoidingView, StyleSheet ,Platform, Dimensions , Image, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-
 import styles from './MainDashboardStyles';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-
+import {ApiEndpoints}  from '@/Globals/ApiEndpoints';
+import ProductSelectionScreen from './ProductSelectionScreen';
+import {navigation} from 'react'
 const ProductInfo = ({ navigation }) => {
 
   const {currentUser} = useSelector(state => state.user);
@@ -22,37 +22,40 @@ const ProductInfo = ({ navigation }) => {
 
     const handleSavePress = async () => {
 
-      let obj = formData;
-      obj.userId = currentUser._id
-      setFormData(obj)
-      try {
+      navigation.navigate('ProductSelectionScreen')
 
-        const res = await fetch("http://192.168.8.242:3000/api/auth/productInfo", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-        console.log('data is ............' , data);
+//       let obj = formData;
+//       obj.userId = currentUser._id
+//       setFormData(obj)
+//       try {
+//  console.log('aaya ',`${ApiEndpoints.saveProductInfo}`);
+ 
+//         const res = await fetch(`${ApiEndpoints.saveProductInfo}`, {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify(formData),
+//         });
+//         const data = await res.json();
+//         console.log('data is ............' , data);
         
-        if (data.status === 404) {
-          return setErrorMessage(data.message);
-          // return dispatch(signInFailure(data.message));
-        }
+//         if (data.status === 404) {
+//           return setErrorMessage(data.message);
+//           // return dispatch(signInFailure(data.message));
+//         }
   
-        if (res.ok) {
-          // dispatch(signInSuccess(data));
-          // dispatch(signInSuccess(data));
-          // await AsyncStorage.setItem('isLoggedIn', 'true');        
-          navigation.navigate("MainDashboard");
-        }
-      } catch (error) {
-        console.log('here in catch');
+//         if (res.ok) {
+//           // dispatch(signInSuccess(data));
+//           // dispatch(signInSuccess(data));
+//          //  await AsyncStorage.setItem('isLoggedIn', 'true');        
+//           navigation.navigate("MainDashboard");
+//         }
+//       } catch (error) {
+//         console.log('here in catch');
         
-        setErrorMessage(error.message);
-        // setLoading(false);
-        // dispatch(signInFailure(data.message));
-      }
+//         setErrorMessage(error.message);
+//         // setLoading(false);
+//         // dispatch(signInFailure(data.message));
+//       }
     }
 
   return (

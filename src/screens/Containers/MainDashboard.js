@@ -9,25 +9,27 @@ import styles from './MainDashboardStyles';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
-
+import Account from './Account';
+import { useNavigation } from '@react-navigation/native';
+import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
 const MainDashboard = ({ navigation }) => {
 
   const [loader , setLoader] = useState(true);
   const [cardInfo , setCardInfo] = useState([]);
-  const {currentUser} = useSelector(state => state.user);
+  const {currentUser} = useSelector(state => state?.user);
   const [formData , setFormData] = useState();
   const isFocused = useIsFocused();
+ const navigationn = useNavigation();
 
     const handleGear = () => {
- 
+   console.log('in handle gear------>>>... ');
+   navigationn.navigate('Account')
     }
 
       const renderCards = (cardInfo) => {
 
         console.log('in handle gear _--------->>>>>>> ');
        return cardInfo.map(element => (
-        console.log(element , 'elem ') , 
-        
            <WarrantyCard cardArray = {element}/>
        ));
        
@@ -37,9 +39,9 @@ const MainDashboard = ({ navigation }) => {
 
      const fetchProduct = async () => {
      try {
-      console.log('isme <><><><><>><><> ',currentUser._id);
-      const userId ={userId: currentUser._id}
-      const res = await fetch(`http://192.168.8.242:3000/api/product/findproduct/${currentUser._id}`);
+      console.log('isme <><><><><>><><> ',currentUser?._id);
+      const userId ={userId: currentUser?._id}
+      const res = await fetch(`${ApiEndpoints.fetchProductByUser}/${currentUser._id}`);
       const data = await res.json();
       setLoader(false);
       if (data.status === 404) {
@@ -50,7 +52,7 @@ const MainDashboard = ({ navigation }) => {
         setCardInfo(data);
       }
     } catch (error) {
-      console.log('here in catch');
+      console.log('here in catch of Main Dashboard' , error);
     }
    
   }
@@ -84,7 +86,7 @@ const MainDashboard = ({ navigation }) => {
         </TouchableOpacity>
       </View>):
     <>
-     <ScrollView>
+     <ScrollView style={{marginBottom: 100}}>
             <View>
                 {renderCards(cardInfo)}
             </View>

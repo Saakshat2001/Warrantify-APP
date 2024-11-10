@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import styles from './Styles';
+import { ApiEndpoints } from '@/Globals/ApiEndpoints';
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const SignUp = ({ navigation }) => {
 
     try {
       setErrorMessage('')
-      const res = await fetch("http://localhost:3000/api/auth/signin", {
+      const res = await fetch(`${ApiEndpoints.signUpApi}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json" // Set the content type to JSON

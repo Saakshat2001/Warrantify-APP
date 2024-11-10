@@ -147,10 +147,11 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
+        height: '50%', 
         backgroundColor: 'white',
         padding: 20,
         borderTopLeftRadius: 10,
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         marginBottom: 20,
+        
     },
     closeButton: {
         fontSize: 16,

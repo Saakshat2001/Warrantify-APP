@@ -8,7 +8,7 @@ import { Brand } from '@/components/molecules';
 import { SafeScreen } from '@/components/template';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
-import { log } from 'console';
+
 
 function Startup({ navigation }) {
     const { layout, gutters, fonts } = useTheme();
@@ -30,7 +30,8 @@ function Startup({ navigation }) {
             console.log('^^^^^^^^^^^^^^^^^^^^');
             
             if(loggedIn === 'true'){
-                console.log('aaya +++++++=');
+        // if(true){       
+         console.log('aaya +++++++=');
                 
                 navigation.dispatch(CommonActions.reset({
                     index: 0,
@@ -43,7 +44,7 @@ function Startup({ navigation }) {
                 index: 0,
                 routes: [{ name: 'Walkthrough' }],
             }));
-        }
+         }
             setLoading(false);
           };
       

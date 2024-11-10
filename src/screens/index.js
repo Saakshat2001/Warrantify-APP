@@ -4,3 +4,7 @@ export { default as Login } from './Onboarding/Login';
 export { default as SignUp } from './Onboarding/SignUp';
 export { default as MainDashboard } from './Containers/MainDashboard';
 export { default as ProductInfo } from './Containers/ProductInfo';
+export { default as Account } from './Containers/Account';
+export { default as ProductSelectionScreen } from './Containers/ProductSelectionScreen';
+export { default as BrandSelection } from './Containers/BrandSelection';
+export { default as PurchaseDateScreen } from './Containers/PurchaseDateScreen';

@@ -10,4 +10,5 @@ if (__DEV__) {
 	import('@/reactotron.config');
 }
 
+
 AppRegistry.registerComponent(appName, () => App);
