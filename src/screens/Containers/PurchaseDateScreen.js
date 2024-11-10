@@ -10,6 +10,7 @@ const PurchaseDateScreen = ({ navigation, route }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [selectedDate, setSelectedDate] = useState(null);
   const [disabled , setDisabled] = useState(true);
+  const [formattedDate , setFormattedDate] = useState();
 
   const handleArrow = () => {
     navigation.goBack();
@@ -17,7 +18,11 @@ const PurchaseDateScreen = ({ navigation, route }) => {
 
   const handleContinuePress = () => {
             console.log('route is ---------',route);
-            
+            navigation.navigate('WarrantyPeriodScreen' , {
+                productName: route.params.productName,
+                brandName: route.params.brandName,
+                purchaseDate: formattedDate
+            })
   }
 
   // Disable future dates\
@@ -35,7 +40,7 @@ const PurchaseDateScreen = ({ navigation, route }) => {
   
     // Formatting to 'DD-MM-YYYY'
     const formattedDate = `${date}-${month}-${year}`;
-    
+    setFormattedDate(formattedDate)
     setSelectedDate(day.dateString);
     console.log('Selected Date:', formattedDate);
   };

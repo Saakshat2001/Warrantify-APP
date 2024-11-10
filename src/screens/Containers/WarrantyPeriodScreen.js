@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import styles from './MainDashboardStyles';
 import  ProductSelectionStyles  from '../styles/ProductSelectionStyles';
 import PurchaseDateScreen from './PurchaseDateScreen';
+import ProductInfo from './ProductInfo';
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 3;
@@ -15,135 +16,78 @@ const itemWidth = (screenWidth - (7 + 1) * cardMargin) / numColumns;
 const WarrantyPeriodScreen = ({ navigation ,route}) => {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState();
-const [productData , setProductData] = useState()
+//const [productData , setProductData] = useState()
   const handleArrow = () => {
     navigation.goBack();
   };
-console.log('prod name' , route.params.productName);
+console.log('prod name' , route.params);
 
-  const acProductData = [
-    { id: '1', name: 'Blue Star' },
-    { id: '2', name: 'BPL' },
-    { id: '3', name: 'Carrier' },
-    { id: '4', name: 'Croma' },
-    { id: '5', name: 'Cruise' },
-    { id: '6', name: 'Daikin' },
-    { id: '7', name: 'Electrolux' },
-    { id: '8', name: 'Godrej' },
-    { id: '9', name: 'Gree' },
-    { id: '10', name: 'Haier' },
-    { id: '11', name: 'Hisense' },
-    { id: '12', name: 'Hyundai' },
-    { id: '13', name: 'IFB' },
-    { id: '14', name: 'Impex' },
-    { id: '15', name: 'Intex' },
-    { id: '16', name: 'Kelvinator' },
-    { id: '17', name: 'LG' },
-    { id: '18', name: 'Livpure' },
-    { id: '19', name: 'Lloyd' },
-    { id: '20', name: 'MarQ by Flipkart' },
-    { id: '21', name: 'Micromax' },
-    { id: '22', name: 'Midea' },
-    { id: '23', name: 'Mitsubhishi' },
-    { id: '24', name: 'Motorola' },
-    { id: '25', name: 'Onida' },
-    { id: '26', name: 'Panasonic' },
-    { id: '27', name: 'Samsung' },
-    { id: '28', name: 'Voltas' },
-    { id: '29', name: 'Whirlpool' },
-    { id: '30', name: 'Toshiba' },
-    { id: '31', name: 'Sansui' },
-    // { id: '2', name: 'Watch', image: require('./assets/watch.png') },
-    // { id: '3', name: 'Battery', image: require('./assets/battery.png') },
-    // { id: '4', name: 'Laptop', image: require('./assets/laptop.png') },
-    // { id: '5', name: 'TV', image: require('./assets/tv.png') },
-    // { id: '6', name: 'Kitchen Appliances', image: require('./assets/kitchen_appliances.png') },
-  ];
-  const watchProductData = [
-    { id: '1', name: 'Apple' },
-    { id: '2', name: 'boAt' },
-    { id: '3', name: 'Casio' },
-    { id: '4', name: 'CITIZEN' },
-    { id: '5', name: 'Daniel Klein' },
-    { id: '6', name: 'Daniel Wellington'},
-    { id: '7', name: 'Fastrack' },
-    { id: '8', name: 'Fossil' },
-    { id: '9', name: 'Maxima' },
-    { id: '10', name: 'OMEGA' },
-    { id: '11', name: 'Rado' },
-    { id: '12', name: 'Sonata' },
-    { id: '13', name: 'Timex' },
-    { id: '14', name: 'Titan' },
-    { id: '15', name: 'Other' },
-  ];
-  const batteryProductData = [
-    { id: '1', name: 'Amaron' },
-    { id: '2', name: 'Bosch' },
-    { id: '3', name: 'Eveready' },
-    { id: '4', name: 'Exide' },
-    { id: '5', name: 'Goldstar' },
-    { id: '6', name: 'HBL'},
-    { id: '7', name: 'Indo' },
-    { id: '8', name: 'Livguard' },
-    { id: '9', name: 'Loom' },
-    { id: '10', name: 'Luminous' },
-    { id: '11', name: 'Microtek' },
-    { id: '12', name: 'OKAYA' },
-    { id: '13', name: 'Panasonic' },
-    { id: '14', name: 'Su-Kam' },
-    { id: '15', name: 'Tata' },
-  ];
-  const laptopProductData = [
-    { id: '1', name: 'Acer' },
-    { id: '2', name: 'AGB' },
-    { id: '3', name: 'Apple' },
-    { id: '4', name: 'Asus' },
-    { id: '5', name: 'Avita' },
-    { id: '6', name: 'Lenovo'},
-    { id: '7', name: 'HP' },
-    { id: '8', name: 'Lava' },
-    { id: '9', name: 'LG' },
-    { id: '10', name: 'Microsoft' },
-    { id: '11', name: 'Redmi' },
-    { id: '12', name: 'Sony' },
-  ];
-  const tvProductData = [
-    { id: '1', name: 'Samsung' },
-    { id: '2', name: 'Sony' },
-    { id: '3', name: 'One Plus' },
-    { id: '4', name: 'Onida' },
-    { id: '5', name: 'Panasonic' },
-    { id: '6', name: 'LG'},
+  const productData = [
+    { id: '1', name: '1 months' },
+    { id: '2', name: '2 months' },
+    { id: '3', name: '3 months' },
+    { id: '4', name: '6 months' },
+    { id: '5', name: '1 Year' },
+    { id: '6', name: '18 months' },
+    { id: '7', name: '2 Years' },
+    { id: '8', name: '30 Months' },
+    { id: '9', name: '3 Years' },
+    { id: '10', name: '4 years' },
+    { id: '11', name: '5 years' },
+    { id: '12', name: '6 years' },
+    { id: '13', name: '7 years' },
+    { id: '14', name: '8 years' },
+    { id: '15', name: '9 years' },
+    { id: '16', name: '10 years' }
   ];
 
-  useEffect(() => {
-  if (route.params.productName === 'Battery')
-    setProductData(batteryProductData)
- else if(route.params.productName === 'TV')
-    setProductData(tvProductData)
- else if(route.params.productName === 'Laptop')
-    setProductData(laptopProductData)
- else if(route.params.productName === 'Watch')
-    setProductData(watchProductData)
- else 
-    setProductData(acProductData)
-  },[])
+  const handleContinuePress = () => {
+    console.log('aa rha');
+    navigation.navigate('ProductInfo')
+  }
+
   
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={[ProductSelectionStyles.card1 , {width: itemWidth}]} onPress={() => handleCardPress(item)}>
+    <TouchableOpacity style={[ProductSelectionStyles.card2 , {width: itemWidth}]} onPress={() => handleCardPress(item)}>
       <Text style={ProductSelectionStyles.cardText1}>{item.name}</Text>
     </TouchableOpacity>
   );
 
+  const addDurationToDate = (startDate, duration) => {
+    // Parse the start date (convert from DD-MM-YYYY to a Date object)
+    const [day, month, year] = startDate.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // Month is 0-indexed in JavaScript
+  
+    // Determine the duration to add
+    if (duration.includes('months') || duration.includes('Months')) {
+      const monthsToAdd = parseInt(duration.split(' ')[0], 10); // e.g., "6 months" -> 6
+      date.setMonth(date.getMonth() + monthsToAdd);
+    } else if (duration.includes('Year') || duration.includes('years') || duration.includes('Years')) {
+      const yearsToAdd = parseInt(duration.split(' ')[0], 10) || 1; // Default to 1 year
+      date.setFullYear(date.getFullYear() + yearsToAdd);
+    }
+  
+    // Format the result back to DD-MM-YYYY
+    const formattedDay = String(date.getDate()).padStart(2, '0');
+    const formattedMonth = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const formattedYear = date.getFullYear();
+  
+    return `${formattedDay}-${formattedMonth}-${formattedYear}`;
+  };
+
   const handleCardPress = (item) => {
-    console.log('Selected Brand:', item.name);
-    navigation.navigate('PurchaseDateScreen', {
+    console.log('Warranty period:', item.name);
+    let warrantyEndDate  = addDurationToDate(route.params.purchaseDate , item.name);
+    console.log('warrantyEndDatee +================ ' , warrantyEndDate);
+    
+    navigation.navigate('ProductInfo', {
         // productId: item.id,
-        productName: route.params.productName,
-        brandName: item.name,
+        product: route.params.productName,
+        brand: route.params.brandName,
+        purchaseDate: route.params.purchaseDate,
+        warrantyEndDate: warrantyEndDate
       });
-    // You can navigate or perform any action here
-    // Example: navigation.navigate('ProductDetails', { product: item });
+
   };
 // let t = ``
   return (
@@ -153,14 +97,10 @@ console.log('prod name' , route.params.productName);
         <TouchableOpacity  style={{marginLeft: 5}} onPress={handleArrow} >
           <Icon name="arrow-left"  size={25} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.titleProductInfo}>Select Brand</Text>
+        <Text style={styles.titleProductInfo}>Select Warranty Period</Text>
       </View>
 
-      {/* Subtitle */}
-      <Text style={{fontSize: 18 , marginLeft: 17, marginTop: 10 , marginBottom:10}}>Choose your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.productName}</Text> brand</Text>
-
-      {/* Product List */}
-
+      <Text style={{fontSize: 18 , marginLeft: 17, marginTop: 10,fontWeight:'600' , marginBottom:10}}>Select your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.brandName} {route.params.productName}</Text> warranty period</Text>
       <FlatList
         data={productData}
         renderItem={renderItem}
@@ -168,6 +108,11 @@ console.log('prod name' , route.params.productName);
         numColumns={3}
         contentContainerStyle={ProductSelectionStyles.flatListContainer}
       />
+       <View style = {{  justifyContent: 'center',alignItems: 'center' , marginBottom:80 }}>
+        <TouchableOpacity style={[styles.saveButton , {backgroundColor: '#0033A0'}  ]} onPress={() => handleContinuePress()} >
+        <Text style={{color:'#fff' , fontWeight: 'bold' , fontSize:20}}>Continue</Text>
+        </TouchableOpacity>
+        </View>
     </View>
   );
 };

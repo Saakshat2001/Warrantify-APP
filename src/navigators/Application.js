@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Walkthrough, Startup , Login , SignUp , MainDashboard , ProductInfo , Account , ProductSelectionScreen ,
-	BrandSelection , PurchaseDateScreen
+	BrandSelection , PurchaseDateScreen , WarrantyPeriodScreen
 } from '@/screens';
 import { useTheme } from '@/theme';
 
@@ -10,7 +10,7 @@ import { useTheme } from '@/theme';
 const Stack = createStackNavigator();
 function ApplicationNavigator() {
     const { variant, navigationTheme } = useTheme();
-	console.log('aaya --------------------------------');
+	console.log('Screen Name is  --------------------------------' );
 	
     return (<SafeAreaProvider>
 			<NavigationContainer theme={navigationTheme}>
@@ -25,6 +25,7 @@ function ApplicationNavigator() {
 					<Stack.Screen name="ProductSelectionScreen" component={ProductSelectionScreen}/>
 					<Stack.Screen name="BrandSelection" component={BrandSelection}/>
 					<Stack.Screen name="PurchaseDateScreen" component={PurchaseDateScreen}/>
+					<Stack.Screen name="WarrantyPeriodScreen" component={WarrantyPeriodScreen}/>
 				</Stack.Navigator>
 			</NavigationContainer>
 

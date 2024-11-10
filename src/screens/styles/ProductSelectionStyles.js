@@ -61,6 +61,21 @@ const ProductSelectionStyles = StyleSheet.create({
       shadowRadius: 3,
       elevation: 5,
     },
+    card2: {
+      width: cardWidth-20,
+      height: cardWidth-100 , // Increase height for text below image
+      backgroundColor: '#ffffff',
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 10,
+      padding: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 5,
+    },
     image: {
       width: '100%',
       height: '50%',

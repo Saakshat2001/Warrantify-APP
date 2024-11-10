@@ -12,12 +12,14 @@ import { useIsFocused } from '@react-navigation/native';
 import Account from './Account';
 import { useNavigation } from '@react-navigation/native';
 import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
+import ProductSelectionScreen from './ProductSelectionScreen';
 const MainDashboard = ({ navigation }) => {
 
   const [loader , setLoader] = useState(true);
   const [cardInfo , setCardInfo] = useState([]);
   const {currentUser} = useSelector(state => state?.user);
   const [formData , setFormData] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const isFocused = useIsFocused();
  const navigationn = useNavigation();
 
@@ -29,9 +31,23 @@ const MainDashboard = ({ navigation }) => {
       const renderCards = (cardInfo) => {
 
         console.log('in handle gear _--------->>>>>>> ');
-       return cardInfo.map(element => (
-           <WarrantyCard cardArray = {element}/>
-       ));
+       return cardInfo.map(element => {
+        console.log('in handle gear _--------->>>>>>> ' , element.product);
+        if(element.product === 'Air Conditioner')
+          element.imageUrl = require('./assets/ac.png');
+        else if(element.product === 'Battery')
+          element.imageUrl = require('./assets/battery.png');
+        else if(element.product === 'Watch')
+          element.imageUrl =  require('./assets/watch.png');
+        else if(element.product === 'Laptop')
+          element.imageUrl =  require('./assets/laptop.png');
+        else if(element.product === 'Tv')
+          element.imageUrl =  require('./assets/tv.png');
+        else {
+          element.imageUrl =  require('./assets/tv.png');
+        }
+          return <WarrantyCard cardArray = {element}/>
+      });
        
       }
 
@@ -48,6 +64,8 @@ const MainDashboard = ({ navigation }) => {
        Alert(data.message);
        // return dispatch(signInFailure(data.message));
       }
+      console.log('data ' , data);
+      
       if (data.length > 0 ) {
         setCardInfo(data);
       }
@@ -92,7 +110,7 @@ const MainDashboard = ({ navigation }) => {
             </View>
         </ScrollView>
          <View style={styles.footer}>
-         <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate('ProductInfo')}>
+         <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate('ProductSelectionScreen')}>
         <Icon name="plus" size={20} color="#FFFFFF" />
         <Text style={{marginLeft: 20,color:'#fff' , fontWeight: '600' , fontSize:20}}>Add Warranty Card/Bill/Invoice</Text>
         </TouchableOpacity>
