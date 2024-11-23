@@ -63,7 +63,7 @@ const Login = ({ navigation }) => {
         navigation.navigate("MainDashboard");
       }
     } catch (error) {
-      console.log('here in catch of Login js');
+      console.log('here in catch of Login js' , error);
       
       setErrorMessage(error.message);
       // setLoading(false);

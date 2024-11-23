@@ -1,4 +1,4 @@
-const IP_ADDRESS = '192.168.8.1'
+const IP_ADDRESS = '192.168.10.112'
 
 export const ApiEndpoints = {
     fetchProductByUser: `http://${IP_ADDRESS}:3000/api/product/findproduct`,
