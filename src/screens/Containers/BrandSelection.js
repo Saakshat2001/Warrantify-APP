@@ -157,7 +157,7 @@ console.log('prod name' , route.params.productName);
       </View>
 
       {/* Subtitle */}
-      <Text style={{fontSize: 18 , marginLeft: 17, marginTop: 10 , marginBottom:10}}>Choose your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.productName}</Text> brand</Text>
+      <Text style={{fontSize: 18 ,color:'#000' ,marginLeft: 17, marginTop: 10 , marginBottom:10}}>Choose your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.productName}</Text> brand</Text>
 
       {/* Product List */}
 

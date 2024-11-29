@@ -2,10 +2,11 @@ import React , {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Button,FlatList } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation} from '@react-navigation/native';
 import Login from '../Onboarding/Login';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AboutUs from './AboutUs';
 const Account = ({ navigation }) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -35,14 +36,19 @@ const Account = ({ navigation }) => {
           
         } else {
             // Handle navigation or any other logic
+            navigation.navigate('AboutUs')
             console.log(option);
         } 
     };
 
     const handleLogout = () => {
         setModalVisible(false); // Close the modal
-       // AsyncStorage.clear();
-        navigation.navigate('Login')
+        AsyncStorage.clear();
+       // navigation.navigate('Login')
+        navigation.reset({
+            index: 0,  // Index of the screen we are navigating to
+            routes: [{ name: 'Login' }], // Reset to the Login screen
+          });
         console.log("User logged out"); // Implement actual logout logic here
     };
 
@@ -93,10 +99,14 @@ const Account = ({ navigation }) => {
                         <Text style={styles.modalText}>Are you sure you want to log out?</Text>
 
                             {/* Buttons for Cancel and Log Out */}
-                        <View style={styles.buttonContainer}>
-                     <Button title="Cancel" onPress={() => setModalVisible(false)} />
-                         <Button title="Log Out" onPress={handleLogout} />
-                                </View>
+                            <View style={styles.buttonContainer}>
+                                 <View style={styles.buttonWrapper}>
+                               <Button title="Cancel" onPress={() => setModalVisible(false)} />
+                                 </View>
+                            <View style={styles.buttonWrapper}>
+                                <Button title="Log Out" onPress={handleLogout} />
+                            </View>
+                                 </View>
 
                     </View>
                 </View>
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
-        marginTop:50
+        marginTop:40
     },
     backButton: {
         marginRight: 16,
@@ -123,6 +133,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        color:'#000',
     },
     profileContainer: {
         flexDirection: 'row',
@@ -146,6 +157,7 @@ const styles = StyleSheet.create({
     fullName: {
         fontSize: 18,
         fontWeight: '600',
+        color:'#000',
     },
     optionsList: {
         marginTop: 0,
@@ -164,6 +176,7 @@ const styles = StyleSheet.create({
     },
     listItemText: {
         fontSize: 16,
+        color:'#000',
     },
     modalContainer: {
         flex: 1,
@@ -179,7 +192,7 @@ const styles = StyleSheet.create({
         // padding: 10,
 
         position: 'absolute',
-        top: '33%',
+        top: '32%',
         right: '10%',
         zIndex: 1,
         backgroundColor: '#fff',  // Button background color
@@ -204,16 +217,21 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        color:'#000',
     },
     modalText: {
         fontSize: 20,
         marginBottom: 20,
+        color:'#000',
         // textAlign: 'center',
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
+    buttonWrapper: {
+        marginRight:12
+    }
 });
 
 export default Account;

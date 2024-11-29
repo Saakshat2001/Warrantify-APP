@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView , Alert} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Image, ScrollView , Alert} from 'react-native';
 import styles from './Styles'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -14,6 +14,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   
 
@@ -24,23 +25,28 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-     
-    let temp = email.slice(1);
+    console.log('in henadle');
+    
+   // e.preventDefault();
+    setIsLoading(true); 
+  //  let temp = email.slice(1);
     // console.log(email.slice(1), ' char at 0 ');
-     let tempEmail = email.charAt(0).toLowerCase()+temp;
+     let tempEmail = email.toLowerCase();
     // setEmail(tempEmail);
      console.log('email is ' ,tempEmail);
      
     const obj = { email:tempEmail , password };
     if (!obj.email || !obj.password) {
+      console.log('no email and no pswd ');
+      setIsLoading(false); 
        return setErrorMessage("Please fill out all fields.");
+
       // dispatch(signInFailure("Please fill out all fields."));
     }
     try {
       // setLoading(true);
        setErrorMessage('');
-       console.log('obj ++++++++++++++++ ',obj);
+       console.log('obj ++++++++++++++++ api enspoube ',`${ApiEndpoints.signInApi}`);
        //10.0.2.2:3000
       // dispatch(signInStart());
       const res = await fetch(`${ApiEndpoints.signInApi}` , {
@@ -57,6 +63,8 @@ const Login = ({ navigation }) => {
       }
 
       if (res.ok) {
+        console.log('inside me ' , data);
+        
         // dispatch(signInSuccess(data));
         dispatch(signInSuccess(data));
         await AsyncStorage.setItem('isLoggedIn', 'true');        
@@ -68,6 +76,10 @@ const Login = ({ navigation }) => {
       setErrorMessage(error.message);
       // setLoading(false);
       // dispatch(signInFailure(data.message));
+    } finally{
+      console.log('in finally -----=+++++++++++');
+      
+      setIsLoading(false); 
     }
   }
 
@@ -105,8 +117,12 @@ const Login = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+      <TouchableOpacity  style={[styles.button, isLoading && styles.buttonDisabled]} onPress={!isLoading && handleLogin} disabled={isLoading}>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#fff" /> // Show a loading spinner
+        ) : (
+          <Text style={styles.buttonText}>Login</Text>
+        )}
       </TouchableOpacity>
       <View style={{ alignItems: 'flex-start', width: '100%' }}>
       <Text style={styles.footerText}>

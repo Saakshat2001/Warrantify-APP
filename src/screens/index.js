@@ -9,3 +9,4 @@ export { default as ProductSelectionScreen } from './Containers/ProductSelection
 export { default as BrandSelection } from './Containers/BrandSelection';
 export { default as PurchaseDateScreen } from './Containers/PurchaseDateScreen';
 export { default as WarrantyPeriodScreen } from './Containers/WarrantyPeriodScreen';
+export {default as AboutUs} from './Containers/AboutUs';

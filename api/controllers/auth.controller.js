@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import Product from "../models/product.model.js";
 import { log } from "console";
 
-export const signin = async(req,res) => {
+export const signInForMobapp = async(req,res) => {
     console.log(req.body , 'req body --------->>>>>>>>>>>>>>>>>>>>>>> ');
     const {email, name, password} = req.body;
     const newUser = new User({

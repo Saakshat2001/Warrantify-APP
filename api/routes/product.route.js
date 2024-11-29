@@ -1,4 +1,4 @@
-import { findproductinfo } from "../controllers/product.controller.js";
+import { findproductinfo  , deleteCard} from "../controllers/product.controller.js";
 // import { google } from "../controllers/auth.controller.js";
 import express from "express";
 const router = express.Router();
@@ -8,6 +8,6 @@ const router = express.Router();
 console.log('isme aaya pro');
 
 router.get("/findproduct/:userId" , findproductinfo )
-
+router.delete('/deleteCard/:cardId', deleteCard);
 
 export default router;

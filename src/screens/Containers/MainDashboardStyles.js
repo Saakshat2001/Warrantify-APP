@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
       paddingHorizontal: 15,
       position: 'relative', // Set to relative
     },
-    image:{
-      width: 200, 
-      height: 200, 
+    image1:{
+      width: '60%', 
+      height: '40%', 
     },
      gearButton: {
       position: 'absolute', // Use absolute positioning
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
       // position:'absolute',
       //  top: 58,
       //  left: 35,
+        color:'#000',
         fontSize: 25, 
         color: '#000000',
         marginLeft:20,
@@ -69,13 +70,16 @@ const styles = StyleSheet.create({
         marginTop: normalize(20),
          justifyContent: 'flex-start',
         marginLeft:20,
-        marginRight: 20
+        marginRight: 20,
+        color:'#000'
        },
        label: {
         position: 'absolute',
         left: 10,
+        color:'#000',
         top: -10, // Adjust this value to move the label closer to the input line
         fontSize: 16,
+        color:'#000',
         backgroundColor: '#E0E0E0', // Match this to the input background
         paddingHorizontal: 5, // Optional: add some padding for aesthetics
         zIndex: 1, // Ensure the label is above the input
@@ -88,17 +92,20 @@ const styles = StyleSheet.create({
         height: 50, // Adjust height as needed
         fontSize:20,
         borderRadius: 10,
-        borderColor: '#000'
+        borderColor: '#000',
+        color:'#000'
       },
     contentText: {
       fontSize: 30,
       marginHorizontal: normalize(60),
       fontWeight: '600',
+      color:'#000',
     },
     subContentText:{
       marginTop: 20,
       fontSize: 18,
       marginHorizontal: normalize(30),
+      color:'#000',
     },
     button: {
       flexDirection: 'row',
@@ -113,13 +120,13 @@ const styles = StyleSheet.create({
     button1: {
       flexDirection: 'row',
       backgroundColor: '#6200EE',
-      padding: 10,
       alignItems: 'center',
+      justifyContent: 'center',
       borderRadius: 30,
       paddingHorizontal: 15,
-      paddingVertical: 15,
+      paddingVertical: 13,
       marginTop: 10,
-      marginBottom: 8
+      marginBottom: 0
     },
     saveButton: {
         flexDirection: 'row',
@@ -143,7 +150,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderTopColor: '#ccc',
-        paddingBottom: 25,
+        paddingBottom: 15,
         zIndex: 1, // Control stacking order
     },
     flatListContainer: {

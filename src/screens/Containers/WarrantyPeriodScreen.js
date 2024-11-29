@@ -100,7 +100,7 @@ console.log('prod name' , route.params);
         <Text style={styles.titleProductInfo}>Select Warranty Period</Text>
       </View>
 
-      <Text style={{fontSize: 18 , marginLeft: 17, marginTop: 10,fontWeight:'600' , marginBottom:10}}>Select your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.brandName} {route.params.productName}</Text> warranty period</Text>
+      <Text style={{fontSize: 18 , marginLeft: 17, marginTop: 10,fontWeight:'600', color:'#000' , marginBottom:10}}>Select your <Text style={{ color: '#0033A0' , fontWeight: 'bold' }}>{route.params.brandName} {route.params.productName}</Text> warranty period</Text>
       <FlatList
         data={productData}
         renderItem={renderItem}

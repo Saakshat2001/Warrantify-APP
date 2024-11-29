@@ -93,26 +93,30 @@ const ProductInfo = ({ navigation , route}) => {
        >
 
       <View style={styles.productInfoContent}>
-        <Text style={{fontWeight:'bold' , marginBottom: 20}}>Fill in the details or skip to proceed.</Text>
+        <Text style={{fontWeight:'bold', color:'#000' , marginBottom: 20}}>Fill in the details or skip to proceed.</Text>
      
        <View style={{marginTop: 0}}>
         <Text style={styles.label}>Model Number</Text>
-        <TextInput style={styles.input} placeholder="Type here..." onChangeText={(e) => { 
+        <TextInput style={styles.input} placeholder="Type here..." placeholderTextColor="gray" onChangeText={(e) => { 
           setFormData({...formData, modelNumber:e})}}/>
         </View>
        <View style={{marginTop: 25}}>
         <Text style={styles.label}>Comments</Text>
-        <TextInput style={styles.input} placeholder="Type here..." onChangeText={(e) => { 
+        <TextInput style={styles.input} placeholder="Type here..."
+        placeholderTextColor="gray"  
+        onChangeText={(e) => { 
           setFormData({...formData, comments:e})}}/>
         </View>
        <View style={{marginTop: 25}}>
         <Text style={styles.label}>Dealer's Name</Text>
-        <TextInput style={styles.input} placeholder="Type here..." onChangeText={(e) => { 
+        <TextInput style={styles.input} placeholder="Type here..."
+          placeholderTextColor="gray"  
+        onChangeText={(e) => { 
           setFormData({...formData, dealer:e})}}/>
         </View>
        <View style={{marginTop: 25}}>
         <Text style={styles.label}>Dealer's Contact</Text>
-        <TextInput style={styles.input} placeholder="Type here..." onChangeText={(e) => { 
+        <TextInput style={styles.input} placeholder="Type here..." placeholderTextColor="gray" onChangeText={(e) => { 
           setFormData({...formData, dealerContactNumber:e})}}/>
         </View>
      

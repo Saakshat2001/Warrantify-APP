@@ -20,6 +20,7 @@ const MainDashboard = ({ navigation }) => {
   const {currentUser} = useSelector(state => state?.user);
   const [formData , setFormData] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isHandleDeleteCalled , setIsHandleDeleteCalled] = useState(false);
   const isFocused = useIsFocused();
  const navigationn = useNavigation();
 
@@ -46,11 +47,41 @@ const MainDashboard = ({ navigation }) => {
         else {
           element.imageUrl =  require('./assets/tv.png');
         }
-          return <WarrantyCard cardArray = {element}/>
+          return <WarrantyCard cardArray = {element}  onDelete={() => handleDeleteCard(element)} />
       });
        
       }
 
+      const handleDeleteCard = async(element) => {
+     
+        console.log('in card array props _=>>>>>,,,,,.>>>>>>>>>>>'  , `${ApiEndpoints.deleteCard}/${element._id}`);
+
+      //  const userId ={userId: currentUser?._id}
+      try{
+        const res = await fetch(`${ApiEndpoints.deleteCard}/${element._id}`,
+            { method: 'DELETE'}
+        );
+        console.log('res ------_>>>>>>>>> ' , res);
+       // setDeleteModalVisible(false);
+        if (res.ok) {
+        const data = await res.json();
+        setIsHandleDeleteCalled(true);
+        console.log('sab theek');
+        }
+        if (res.status === 404) {
+         Alert.alert(data.message);
+         // return dispatch(signInFailure(data.message));
+        }
+        console.log('res  ' , res);
+       
+      } catch (error) {
+        console.log('here in catch of Main Dashboard' , error);
+      }
+       // AsyncStorage.clear();
+        // navigation.navigate('Login')
+        // console.log("User logged out"); // Implement actual logout logic here
+    };
+  
     useEffect(() => {
 
      const fetchProduct = async () => {
@@ -59,23 +90,27 @@ const MainDashboard = ({ navigation }) => {
       const userId ={userId: currentUser?._id}
       const res = await fetch(`${ApiEndpoints.fetchProductByUser}/${currentUser._id}`);
       const data = await res.json();
-      setLoader(false);
+      
       if (data.status === 404) {
-       Alert(data.message);
+       Alert.alert(data.message);
        // return dispatch(signInFailure(data.message));
       }
-      console.log('data ' , data);
-      
+      console.log('data ' , data.length);
+   
       if (data.length > 0 ) {
         setCardInfo(data);
       }
+      else{
+        setCardInfo(data);
+      }
+      setLoader(false);
     } catch (error) {
       console.log('here in catch of Main Dashboard' , error);
     }
-   
+   setIsHandleDeleteCalled(false);
   }
         fetchProduct()
-    } , [isFocused])
+    } , [isFocused , isHandleDeleteCalled])
 
   return (
     <View style={styles.container}>
@@ -94,11 +129,11 @@ const MainDashboard = ({ navigation }) => {
       {!loader && (cardInfo.length===0 ? (<View style={styles.content}>
         <Image source={{uri: 'https://t4.ftcdn.net/jpg/00/72/70/77/360_F_72707719_hltmyPNrFAqEOqEIJRVTsBWQqR9ofH5D.jpg'}} 
         resizeMode='contain'
-        style={styles.image}
+        style={styles.image1}
         />
         <Text style={styles.contentText}>You have not added any Warranty Cards.</Text>
         <Text style={styles.subContentText}>Start adding your warranty cards/invoice/bill</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProductInfo')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProductSelectionScreen')}>
         <Icon name="plus" size={20} color="#FFFFFF" />
         <Text style={{marginLeft: 20,color:'#fff' , fontWeight: '600' , fontSize:20}}>Add Warranty Card/Bill/Invoice</Text>
         </TouchableOpacity>

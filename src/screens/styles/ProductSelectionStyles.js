@@ -26,6 +26,7 @@ const ProductSelectionStyles = StyleSheet.create({
       //textAlign: 'center',
       marginLeft: 17,
       marginVertical: 10,
+      color:'#000'
     },
     flatListContainer: {
       paddingBottom: 20,

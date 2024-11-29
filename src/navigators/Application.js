@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Walkthrough, Startup , Login , SignUp , MainDashboard , ProductInfo , Account , ProductSelectionScreen ,
-	BrandSelection , PurchaseDateScreen , WarrantyPeriodScreen
+	BrandSelection , PurchaseDateScreen , WarrantyPeriodScreen , AboutUs
 } from '@/screens';
 import { useTheme } from '@/theme';
 
@@ -26,6 +26,7 @@ function ApplicationNavigator() {
 					<Stack.Screen name="BrandSelection" component={BrandSelection}/>
 					<Stack.Screen name="PurchaseDateScreen" component={PurchaseDateScreen}/>
 					<Stack.Screen name="WarrantyPeriodScreen" component={WarrantyPeriodScreen}/>
+					<Stack.Screen name="AboutUs" component={AboutUs}/>
 				</Stack.Navigator>
 			</NavigationContainer>
 

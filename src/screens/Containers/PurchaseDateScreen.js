@@ -56,7 +56,7 @@ const PurchaseDateScreen = ({ navigation, route }) => {
       </View>
 
       {/* Subtitle */}
-      <Text style={{ fontSize: 18, marginLeft: 17, marginTop: 10, marginBottom: 10 }}>
+      <Text style={{ fontSize: 18, marginLeft: 17, marginTop: 10, marginBottom: 10 , color:'#000' }}>
         Choose your{' '}
         <Text style={{ color: '#0033A0', fontWeight: 'bold' }}>{route.params.brandName}</Text> product purchase date.
       </Text>

@@ -17,7 +17,7 @@ const Walkthrough = ({ navigation }) => {
                 style={styles.logo}
                 resizeMode="contain"
             />
-            <Text style={{fontSize: 20 ,margin:10 , fontWeight: '800'}}>Manage all your warranties in a single place</Text>
+            <Text style={{fontSize: 20 ,margin:10 , fontWeight: '800' , color:'#000'}}>Manage all your warranties in a single place</Text>
        
          
             <View style={styles.buttonContainer}>

@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TouchableWithoutFeedback, Keyboard ,Button} from 'react-native';
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TouchableWithoutFeedback, Keyboard ,Button , Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Importing from react-native-vector-icons
 import normalize from 'react-native-normalize';
+import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
 import { ScrollView } from 'react-native-gesture-handler';
-const WarrantyCard = (cardArray) => {
 
-    console.log('aaya>>>>>>>>>>>>>>>> ',cardArray);
+
+const WarrantyCard = ({cardArray , onDelete}) => {
+
+   console.log('aaya>>>>>>>>>>>>>>>> ',cardArray, onDelete);
     
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setDeleteModalVisible] = useState(false);
-       console.log('props are ++++++++++++++++++ ' ,cardArray);
+      // console.log('props are ++++++++++++++++++ ' ,cardArray);
        
-       const handleLogout = (e) => {
-        setDeleteModalVisible(false); // Close the modal
-        console.log('event is ',e);
-        
-       // AsyncStorage.clear();
-        // navigation.navigate('Login')
-        // console.log("User logged out"); // Implement actual logout logic here
-    };
+    
+  const handleDelete = async () => {
+    await onDelete(); // Call the onDelete function passed from the parent
+    //hideModal(); // Close the modal
+    setDeleteModalVisible(false);
+  };
 
     const handleDeletePress = () => {
         setDeleteModalVisible(true);
@@ -29,19 +30,19 @@ const WarrantyCard = (cardArray) => {
         <View style={styles.card}>
             <View style={styles.leftContainer}>
                 <Image 
-                    source={cardArray.cardArray.imageUrl} // Replace with your logo path
+                    source={cardArray.imageUrl} // Replace with your logo path
                     style={styles.logo}
                     resizeMode="contain"
                 />
                 <Text style={styles.label}>Purchase Date:</Text>
-                <Text style={styles.boldText}>{cardArray.cardArray.purchaseDate}</Text>
+                <Text style={styles.boldText}>{cardArray.purchaseDate}</Text>
                 <Text style={styles.label}>Warranty Up To:</Text>
-                <Text style={styles.boldText}>{cardArray.cardArray.warrantyEndDate}</Text>
+                <Text style={styles.boldText}>{cardArray.warrantyEndDate}</Text>
             </View>
             <View style={styles.borderLine} />
             <View style={styles.rightContainer}>
                  <View style={styles.iconContainer}>
-                     <Text style={styles.watchTitle}>{cardArray.cardArray.product}</Text>
+                     <Text style={styles.watchTitle}>{cardArray.product}</Text>
                      <TouchableOpacity style={styles.editIcon}>
                          <Icon name="create-outline" size={25} color="black" />
                      </TouchableOpacity>
@@ -100,8 +101,10 @@ const WarrantyCard = (cardArray) => {
 
                             {/* Buttons for Cancel and Log Out */}
                         <View style={styles.buttonContainer}>
+                            <View style={{marginRight:10}}>
                      <Button title="Cancel" onPress={() => setDeleteModalVisible(false)} />
-                         <Button title="Remove" onPress={handleLogout} />
+                     </View>
+                         <Button title="Remove" onPress={handleDelete} />
                                 </View>
 
                     </View>
@@ -207,7 +210,7 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         marginBottom: 20,
-        
+        color:'#000',
     },
     closeButton: {
         fontSize: 16,
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
         // padding: 10,
 
         position: 'absolute',
-        top: '33%',
+        top: '32%',
         right: '10%',
         zIndex: 1,
         backgroundColor: '#fff',  // Button background color
@@ -254,10 +257,12 @@ const styles = StyleSheet.create({
     deleteModalTitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        color:'#000',
     },
     delteModalText: {
         fontSize: 20,
         marginBottom: 20,
+        color:'#000',
         // textAlign: 'center',
     },
     buttonContainer: {

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
+      color: '#000',
     },
     input: {
       width: '100%',
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
       marginBottom: 15,
       borderColor: '#ddd',
       borderWidth: 1,
+      color: '#000',
     },
     button: {
       width: '100%',
@@ -49,6 +51,9 @@ const styles = StyleSheet.create({
     linkText: {
       color: '#4CAF50',
       fontWeight: 'bold',
+    },
+    buttonDisabled: {
+      backgroundColor: '#A9A9A9', // Change button color when disabled
     },
   });
   

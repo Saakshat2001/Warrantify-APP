@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,ActivityIndicator, ScrollView, Alert } from 'react-native';
 import styles from './Styles';
 import { ApiEndpoints } from '@/Globals/ApiEndpoints';
 
@@ -8,14 +8,17 @@ const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async () => {
+    setIsLoading(true); 
     if (name === '' || email === '' || password === '') {
       setErrorMessage("Please fill out all fields.");
+      setIsLoading(false); 
       return; // Prevent further execution if validation fails
     }
-
-    const obj = { email, name, password };
+    let tempEmail = email.toLowerCase()
+    const obj = { email:tempEmail, name, password };
 
     try {
       setErrorMessage('')
@@ -30,10 +33,12 @@ const SignUp = ({ navigation }) => {
       const data = await res.json();
 
       if (!res.ok) {
+        setIsLoading(false); 
         return setErrorMessage(data.message || "An error occurred."); // Handle errors
       }
 
       // Handle successful signup (e.g., navigate to login)
+      setIsLoading(false); 
        navigation.navigate("Login");
 
     } catch (error) {
@@ -79,8 +84,13 @@ const SignUp = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry  
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity style={[styles.button , isLoading && styles.buttonDisabled]} onPress={!isLoading && handleSignup}>
+      {isLoading ? (
+          <ActivityIndicator size="small" color="#fff" /> // Show a loading spinner
+        ) : (
+          <Text style={styles.buttonText}>Sign Up</Text>
+        )}
+        {/* <Text style={styles.buttonText}>Sign Up</Text> */}
       </TouchableOpacity>
       <View style={{ alignItems: 'flex-start', width: '100%' }}>
         <Text style={styles.footerText}>
