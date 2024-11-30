@@ -5,5 +5,6 @@ export const ApiEndpoints = {
     saveProductInfo: `${IP_ADDRESS}/api/auth/productInfo`,
     signInApi: `${IP_ADDRESS}/api/auth/login`,
     signUpApi: `${IP_ADDRESS}/api/auth/signInForMobapp`,
-    deleteCard: `${IP_ADDRESS}/api/product/deleteCard`
+    deleteCard: `${IP_ADDRESS}/api/product/deleteCard`,
+    editCard: `${IP_ADDRESS}/api/product/editCard`
 }

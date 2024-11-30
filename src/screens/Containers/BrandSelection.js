@@ -15,6 +15,7 @@ const itemWidth = (screenWidth - (7 + 1) * cardMargin) / numColumns;
 const BrandSelection = ({ navigation ,route}) => {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState();
+  const [editBrand , setEditBrand] = useState();
 const [productData , setProductData] = useState()
   const handleArrow = () => {
     navigation.goBack();
@@ -127,11 +128,15 @@ console.log('prod name' , route.params.productName);
     setProductData(watchProductData)
  else 
     setProductData(acProductData)
+
+    if(route?.params?.modifyElement){
+      setEditBrand(route.params.modifyElement.brand)
+     }
   },[])
   
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={[ProductSelectionStyles.card1 , {width: itemWidth}]} onPress={() => handleCardPress(item)}>
-      <Text style={ProductSelectionStyles.cardText1}>{item.name}</Text>
+    <TouchableOpacity style={[ProductSelectionStyles.card1 , item.name===editBrand && ProductSelectionStyles.cardEditBrand , {width: itemWidth}]} onPress={() => handleCardPress(item)}>
+      <Text style={[ProductSelectionStyles.cardText1 ,item.name===editBrand && ProductSelectionStyles.cardTextSelected ]}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -141,6 +146,7 @@ console.log('prod name' , route.params.productName);
         // productId: item.id,
         productName: route.params.productName,
         brandName: item.name,
+        modifyElement : route?.params?.modifyElement
       });
     // You can navigate or perform any action here
     // Example: navigation.navigate('ProductDetails', { product: item });

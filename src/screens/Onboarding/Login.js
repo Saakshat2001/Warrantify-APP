@@ -20,7 +20,7 @@ const Login = ({ navigation }) => {
 
   const navigateToSignUp = () => {
     // Handle login logic
-    console.log('Logging in with:', email, password);
+   // console.log('Logging in with:', email, password);
     navigation.navigate('SignUp')
   };
 

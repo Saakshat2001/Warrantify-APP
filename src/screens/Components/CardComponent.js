@@ -4,12 +4,13 @@ import Icon from 'react-native-vector-icons/Ionicons'; // Importing from react-n
 import normalize from 'react-native-normalize';
 import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
 import { ScrollView } from 'react-native-gesture-handler';
+import ProductSelectionScreen from '../Containers/ProductSelectionScreen';
+import { useNavigation } from '@react-navigation/native';
 
-
-const WarrantyCard = ({cardArray , onDelete}) => {
+const WarrantyCard = ({cardArray , onDelete , onEditPress}) => {
 
    console.log('aaya>>>>>>>>>>>>>>>> ',cardArray, onDelete);
-    
+    const navigation = useNavigation();    
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setDeleteModalVisible] = useState(false);
       // console.log('props are ++++++++++++++++++ ' ,cardArray);
@@ -20,6 +21,13 @@ const WarrantyCard = ({cardArray , onDelete}) => {
     //hideModal(); // Close the modal
     setDeleteModalVisible(false);
   };
+
+  const handleEditPress = (element) => {
+    console.log('edit press', element);
+
+    //navigation.navigate('ProductSelectionScreen')
+    
+  }
 
     const handleDeletePress = () => {
         setDeleteModalVisible(true);
@@ -43,7 +51,7 @@ const WarrantyCard = ({cardArray , onDelete}) => {
             <View style={styles.rightContainer}>
                  <View style={styles.iconContainer}>
                      <Text style={styles.watchTitle}>{cardArray.product}</Text>
-                     <TouchableOpacity style={styles.editIcon}>
+                     <TouchableOpacity style={styles.editIcon} onPress={onEditPress}>
                          <Icon name="create-outline" size={25} color="black" />
                      </TouchableOpacity>
                      <TouchableOpacity style={styles.deleteIcon} onPress={handleDeletePress}>

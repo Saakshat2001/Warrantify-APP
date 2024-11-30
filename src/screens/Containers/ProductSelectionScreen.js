@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
@@ -7,14 +7,21 @@ import  ProductSelectionStyles  from '../styles/ProductSelectionStyles';
 import BrandSelection from './BrandSelection';
 //import navigation from 'react-native';
 
-const ProductSelectionScreen = ({ navigation }) => {
+const ProductSelectionScreen = ({ navigation , route }) => {
+
+  console.log('route -------------------------- ' , route);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState();
 
   const handleArrow = () => {
     navigation.goBack();
   };
-
+  useEffect(() => {
+         if(route?.params?.modifyElement){
+          setSelectedProduct(route.params.modifyElement.product)
+         }
+  } , [])
   const productData = [
     { id: '1', name: 'Air Conditioner', image: require('./assets/ac.png') },
     { id: '2', name: 'Watch', image: require('./assets/watch.png') },
@@ -25,9 +32,11 @@ const ProductSelectionScreen = ({ navigation }) => {
   ];
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={ProductSelectionStyles.card} onPress={() => handleCardPress(item)}>
+   console.log(item.name , selectedProduct , '-=================='),
+   
+    <TouchableOpacity style={[ ProductSelectionStyles.card , item.name === selectedProduct && ProductSelectionStyles.selectedProduct ]} onPress={() => handleCardPress(item)}>
       <Image source={item.image} style={ProductSelectionStyles.image} />
-      <Text style={ProductSelectionStyles.cardText}>{item.name}</Text>
+      <Text style={[ProductSelectionStyles.cardText, item.name === selectedProduct && ProductSelectionStyles.cardTextSelected] }>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -36,6 +45,7 @@ const ProductSelectionScreen = ({ navigation }) => {
     navigation.navigate('BrandSelection', {
       // productId: item.id,
       productName: item.name,
+      modifyElement : route?.params?.modifyElement
     });
     // You can navigate or perform any action here
     // Example: navigation.navigate('ProductDetails', { product: item });

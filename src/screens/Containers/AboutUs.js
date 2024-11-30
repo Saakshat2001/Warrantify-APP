@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator , Linking, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useState } from 'react';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/FontAwesome'; // FontAwesome for icons
 
-const AboutUs = () => {
+const AboutUs = ({navigation}) => {
   const handleLink = (url) => {
     Linking.openURL(url).catch((err) => console.error('An error occurred', err));
   };
@@ -16,10 +17,20 @@ const AboutUs = () => {
    setLoading(false); // Hide the loader if there's an error loading the image
     // You can handle the error case here, like setting a default image
   };
+  const handleArrow = () => {
+    navigation.goBack();
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.contentContainer}>
         {/* Profile Image and Name */}
+        <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Icons name="arrow-back" size={24} color="#000" />
+                </TouchableOpacity>
+                <Text style={styles.title}>About Me</Text>
+            </View>
         <View style={styles.profileContainer}>
           {/* Loader displayed until the image is loaded */}
       {loading && (
@@ -34,10 +45,8 @@ const AboutUs = () => {
           <Text style={styles.heading}>Saakshat Tyagi</Text>
           <Text style={styles.subheading}>Passionate Developer & Technology Enthusiast</Text>
         </View>
-
         {/* About Me Section */}
         <View style={styles.section}>
-          <Text style={styles.subheading}>About Me</Text>
           <Text style={styles.text}>
             Hi, I'm Saakshat Tyagi, a passionate developer with expertise in JavaScript, Node.js, MongoDB, and Java. I love to build scalable web applications and have a keen interest in exploring new technologies. I am always eager to learn, grow, and contribute to the community through open-source projects.
           </Text>
@@ -89,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   contentContainer: {
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 30,
   },
   profileContainer: {
@@ -114,6 +123,12 @@ const styles = StyleSheet.create({
     color: '#0077B5',
     marginTop: 10,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 0
+},
   text: {
     fontSize: 16,
     color: '#555',
@@ -126,6 +141,11 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 0,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color:'#000',
   },
   footer: {
     marginTop: 30,
@@ -154,6 +174,9 @@ const styles = StyleSheet.create({
     left: '53%', // Center loader horizontally
     transform: [{ translateX: -25 }, { translateY: -25 }], // Offset the loader so it's centered on the image
   },
+  backButton: {
+    marginRight: 16,
+},
 });
 
 export default AboutUs;

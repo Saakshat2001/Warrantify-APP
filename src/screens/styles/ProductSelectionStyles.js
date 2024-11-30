@@ -31,6 +31,7 @@ const ProductSelectionStyles = StyleSheet.create({
     flatListContainer: {
       paddingBottom: 20,
       paddingHorizontal: 10,
+
     },
     card: {
       width: cardWidth,
@@ -51,6 +52,21 @@ const ProductSelectionStyles = StyleSheet.create({
       width: cardWidth-30,
       height: cardWidth-70 , // Increase height for text below image
       backgroundColor: '#ffffff',
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 10,
+      padding: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 5,
+    },
+    cardEditBrand: {
+      width: cardWidth-30,
+      height: cardWidth-70 , // Increase height for text below image
+      backgroundColor: 'blue',
       borderRadius: 10,
       alignItems: 'center',
       justifyContent: 'center',
@@ -88,11 +104,41 @@ const ProductSelectionStyles = StyleSheet.create({
       marginTop: 15,
       textAlign: 'center',
     },
+    cardTextSelected: {
+      fontSize: 18,
+      color: '#FFF',
+      //marginTop: 15,
+      textAlign: 'center',
+    },
     cardText1: {
       fontSize: 18,
       color: '#007BFF',
       fontWeight: '700',
       textAlign: 'center',
+    },
+    productItem: {
+      flex: 0.48,
+      backgroundColor: '#f0f0f0',  // Default background color
+      marginBottom: 10,
+      padding: 10,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    selectedProduct: {
+      width: cardWidth,
+      height: cardWidth+20 , // Increase height for text below image
+      backgroundColor: 'blue',
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 10,
+      padding: 2,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 5,
     },
   });
 

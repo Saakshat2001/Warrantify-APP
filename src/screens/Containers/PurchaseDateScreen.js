@@ -11,17 +11,23 @@ const PurchaseDateScreen = ({ navigation, route }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [disabled , setDisabled] = useState(true);
   const [formattedDate , setFormattedDate] = useState();
-
+  console.log(route?.params?.modifyElement , ' in purchase date screen  ------->>>>>>>>');
+  
   const handleArrow = () => {
     navigation.goBack();
   };
 
   const handleContinuePress = () => {
             console.log('route is ---------',route);
+            let editCard = false;
+            if(route?.params?.modifyElement !== undefined)
+              editCard = true;
             navigation.navigate('WarrantyPeriodScreen' , {
                 productName: route.params.productName,
                 brandName: route.params.brandName,
-                purchaseDate: formattedDate
+                purchaseDate: formattedDate,
+                modifyElement: route?.params?.modifyElement,
+                editCard
             })
   }
 

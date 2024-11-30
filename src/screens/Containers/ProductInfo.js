@@ -9,10 +9,12 @@ import { useState } from 'react';
 import {ApiEndpoints}  from '@/Globals/ApiEndpoints';
 import ProductSelectionScreen from './ProductSelectionScreen';
 import {navigation} from 'react'
+import { log } from 'console';
 const ProductInfo = ({ navigation , route}) => {
 
   const {currentUser} = useSelector(state => state.user);
   const [formData , setFormData] = useState();
+
 
    // console.log('currentUser _--------->>>>>>> ' ,currentUser );
     const handleArrow = () => {
@@ -22,35 +24,38 @@ const ProductInfo = ({ navigation , route}) => {
 
     const handleSavePress = async () => {
 
-     // navigation.navigate('ProductSelectionScreen')
-           // console.log('route params are' , route.params);
-
-            // {
-            //   "product":"watch",
-            //   "brand": "df",
-            //   "modelNumber": "sdsaf",
-            //   "comments": "dfsd",
-            //   "dealer": "sdfd",
-            //   "dealerContactNumber": "dsf",
-            //   "purchaseDate": "sdf",
-            //   "warrantyEndDate": "sdf",
-            //   "userId":"66668a8a4d337f19ee48644a"
-            // }
-
                      let obj = formData;
+                     if(!route.params.editCard)
                      obj.userId = currentUser._id
-                    obj={...route.params , ...obj}
+                    const {editCard , cardId , ...newObj} = route.params;
+              
+                    
+                    obj={...newObj , ...obj}
+                    console.log(' obj are ', obj);
                      setFormData(obj)
-                    console.log('formData bolte =============================== ' , formData);
+                     console.log('in product info ********************************************** ' ,`http://localhost:3000/api/product/editCard/${route.params.cardId}`);
                     
                     try {
-              console.log('aaya ',`${ApiEndpoints.saveProductInfo}`);
-              
-                      const res = await fetch(`${ApiEndpoints.saveProductInfo}`, {
+            //  console.log('aaya ',`${ApiEndpoints.saveProductInfo}`);
+              let res = '';
+                     if(route.params.editCard){
+                      console.log('aaya ');
+                      
+                       res = await fetch(`http://192.168.10.47:3000/api/product/editCard/${route.params.cardId}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(obj),
+                      });
+                     }
+                     else{
+                       res = await fetch(`${ApiEndpoints.saveProductInfo}`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(obj),
                       });
+                    }
+                    console.log(res , '---------------------');
+                    
                       const data = await res.json();
                       console.log('data is ............' , data);
                       
@@ -59,14 +64,14 @@ const ProductInfo = ({ navigation , route}) => {
                         // return dispatch(signInFailure(data.message));
                       }
                 
-                      if (res.ok) {
+                      if (res.status == 200) {
                         // dispatch(signInSuccess(data));
                         // dispatch(signInSuccess(data));
                       //  await AsyncStorage.setItem('isLoggedIn', 'true');        
                         navigation.navigate("MainDashboard");
                       }
                     } catch (error) {
-                      console.log('here in catch');
+                      console.log('here in catch' , error);
                       
                       setErrorMessage(error.message);
                       // setLoading(false);

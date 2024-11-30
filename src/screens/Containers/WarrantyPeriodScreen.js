@@ -78,14 +78,15 @@ console.log('prod name' , route.params);
   const handleCardPress = (item) => {
     console.log('Warranty period:', item.name);
     let warrantyEndDate  = addDurationToDate(route.params.purchaseDate , item.name);
-    console.log('warrantyEndDatee +================ ' , warrantyEndDate);
-    
+    console.log('warrantyEndDatee +================ ' , route.params?.modifyElement);
     navigation.navigate('ProductInfo', {
         // productId: item.id,
         product: route.params.productName,
         brand: route.params.brandName,
         purchaseDate: route.params.purchaseDate,
-        warrantyEndDate: warrantyEndDate
+        warrantyEndDate: warrantyEndDate,
+        editCard : route?.params?.editCard || false,
+        cardId: route.params?.modifyElement?._id
       });
 
   };

@@ -47,11 +47,17 @@ const MainDashboard = ({ navigation }) => {
         else {
           element.imageUrl =  require('./assets/tv.png');
         }
-          return <WarrantyCard cardArray = {element}  onDelete={() => handleDeleteCard(element)} />
+          return <WarrantyCard cardArray = {element} onEditPress={() => handleEditPress(element)} onDelete={() => handleDeleteCard(element)} />
       });
        
       }
-
+     
+      const handleEditPress = async(element) => {
+        console.log('element ------------ ',element );
+        navigation.navigate('ProductSelectionScreen' , {
+            modifyElement : element
+        })
+      }
       const handleDeleteCard = async(element) => {
      
         console.log('in card array props _=>>>>>,,,,,.>>>>>>>>>>>'  , `${ApiEndpoints.deleteCard}/${element._id}`);
