@@ -148,10 +148,8 @@ console.log('prod name' , route.params.productName);
         brandName: item.name,
         modifyElement : route?.params?.modifyElement
       });
-    // You can navigate or perform any action here
-    // Example: navigation.navigate('ProductDetails', { product: item });
   };
-// let t = ``
+
   return (
     <View style={ProductSelectionStyles.container}>
       {/* Title Bar */}

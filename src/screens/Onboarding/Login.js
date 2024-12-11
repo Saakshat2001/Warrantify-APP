@@ -29,24 +29,16 @@ const Login = ({ navigation }) => {
     
    // e.preventDefault();
     setIsLoading(true); 
-  //  let temp = email.slice(1);
-    // console.log(email.slice(1), ' char at 0 ');
      let tempEmail = email.toLowerCase();
-    // setEmail(tempEmail);
-     console.log('email is ' ,tempEmail);
      
     const obj = { email:tempEmail , password };
     if (!obj.email || !obj.password) {
-      console.log('no email and no pswd ');
-      setIsLoading(false); 
+        setIsLoading(false); 
        return setErrorMessage("Please fill out all fields.");
-
-      // dispatch(signInFailure("Please fill out all fields."));
     }
     try {
       // setLoading(true);
        setErrorMessage('');
-       console.log('obj ++++++++++++++++ api enspoube ',`${ApiEndpoints.signInApi}`);
        //10.0.2.2:3000
       // dispatch(signInStart());
       const res = await fetch(`${ApiEndpoints.signInApi}` , {
@@ -55,11 +47,8 @@ const Login = ({ navigation }) => {
         body: JSON.stringify(obj),
       });
       const data = await res.json();
-      console.log('data is ............' , data);
-      
       if (data.status === 404) {
         return setErrorMessage(data.message);
-        // return dispatch(signInFailure(data.message));
       }
 
       if (res.ok) {
@@ -78,7 +67,6 @@ const Login = ({ navigation }) => {
       // dispatch(signInFailure(data.message));
     } finally{
       console.log('in finally -----=+++++++++++');
-      
       setIsLoading(false); 
     }
   }

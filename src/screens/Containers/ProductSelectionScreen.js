@@ -32,7 +32,7 @@ const ProductSelectionScreen = ({ navigation , route }) => {
   ];
 
   const renderItem = ({ item }) => (
-   console.log(item.name , selectedProduct , '-=================='),
+  // console.log(item.name , selectedProduct , '-=================='),
    
     <TouchableOpacity style={[ ProductSelectionStyles.card , item.name === selectedProduct && ProductSelectionStyles.selectedProduct ]} onPress={() => handleCardPress(item)}>
       <Image source={item.image} style={ProductSelectionStyles.image} />
@@ -41,14 +41,11 @@ const ProductSelectionScreen = ({ navigation , route }) => {
   );
 
   const handleCardPress = (item) => {
-    console.log('Selected Product:', item.name);
     navigation.navigate('BrandSelection', {
       // productId: item.id,
       productName: item.name,
       modifyElement : route?.params?.modifyElement
     });
-    // You can navigate or perform any action here
-    // Example: navigation.navigate('ProductDetails', { product: item });
   };
 
   return (

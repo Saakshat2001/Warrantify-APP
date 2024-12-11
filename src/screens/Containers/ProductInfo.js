@@ -14,11 +14,7 @@ const ProductInfo = ({ navigation , route}) => {
 
   const {currentUser} = useSelector(state => state.user);
   const [formData , setFormData] = useState();
-
-
-   // console.log('currentUser _--------->>>>>>> ' ,currentUser );
     const handleArrow = () => {
-        console.log('in handle gear _--------->>>>>>> ');
         navigation.goBack();
     }
 
@@ -28,15 +24,9 @@ const ProductInfo = ({ navigation , route}) => {
                      if(!route.params.editCard)
                      obj.userId = currentUser._id
                     const {editCard , cardId , ...newObj} = route.params;
-              
-                    
                     obj={...newObj , ...obj}
-                    console.log(' obj are ', obj);
                      setFormData(obj)
-                     console.log('in product info ********************************************** ' ,`http://localhost:3000/api/product/editCard/${route.params.cardId}`);
-                    
                     try {
-            //  console.log('aaya ',`${ApiEndpoints.saveProductInfo}`);
               let res = '';
                      if(route.params.editCard){
                       console.log('aaya ');
@@ -54,28 +44,19 @@ const ProductInfo = ({ navigation , route}) => {
                         body: JSON.stringify(obj),
                       });
                     }
-                    console.log(res , '---------------------');
                     
                       const data = await res.json();
-                      console.log('data is ............' , data);
-                      
                       if (data.status === 404) {
                         return setErrorMessage(data.message);
                         // return dispatch(signInFailure(data.message));
                       }
                 
-                      if (res.status == 200) {
-                        // dispatch(signInSuccess(data));
-                        // dispatch(signInSuccess(data));
-                      //  await AsyncStorage.setItem('isLoggedIn', 'true');        
+                      if (res.status == 200) {     
                         navigation.navigate("MainDashboard");
                       }
                     } catch (error) {
                       console.log('here in catch' , error);
-                      
                       setErrorMessage(error.message);
-                      // setLoading(false);
-                      // dispatch(signInFailure(data.message));
                     }
     }
 
