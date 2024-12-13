@@ -4,6 +4,32 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import Product from "../models/product.model.js";
+console.log('console');
+// import messaging from '@react-native-firebase/messaging';
+import admin from 'firebase-admin';
+
+admin.initializeApp({
+    credential: admin.credential.cert('./config/serviceAccountKey.json'),
+    databaseURL: 'https://react-native-dream-fccff-default-rtdb.firebaseio.com'
+  });
+
+
+  const sendPushNotification = async (deviceToken, title, body) => {
+    try {
+      const message = {
+        notification: {
+          title: title,
+          body: body,
+        },
+        token: deviceToken,  // The device token that the notification will be sent to
+      };
+  
+      const response = await admin.messaging().send(message);
+      console.log('Successfully sent message:', response);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
+  };
 
 export const findproductinfo = async(req,res) => {
 
@@ -27,19 +53,46 @@ export const findproductinfo = async(req,res) => {
   
   }
 
+//   async function requestUserPermission() {
+//     const authStatus = await messaging().requestPermission();
+//     const enabled = 
+//     authStatus === messaging.AuthorizationStatus.AUTHORIZED || 
+//     authStatus === messaging.AuthorizationStatus.PROVISIONAL 
+    
+//     if(enabled){
+//         console.log('Authorization status:' ,authStatus);
+        
+//     }
+     
+// }
+//         const getToken = async() => {
+//             const token = await messaging().getToken();
+//             console.log("Token = " , token);
+//             return token;
+//         }
+
   export const deleteCard = async(req,res) => {
 
     try{
-        console.log('aara ');
+        console.log('aara ----------__>>>>>>>>>>>>>> ' , req.headers);
         
         const card = await Product.findById(req.params.cardId);
-        console.log(req.params.cardId , card , '------>>>>>>>.');
-        
+     
+        const token = req.headers.authorization?.split(' ')[1];
+        console.log(' toeken is ------>>>>>>>.' , token);
         if(!card){
             return res.status(404).json({ message: 'Card not found' });
         }
        // res.status(200).json({message : 'Card deleted' });
           await Product.findByIdAndDelete(req.params.cardId);
+        //   await requestUserPermission()
+        //   let token = await getToken()
+        //   if (!token) {
+        //     return res.status(500).json({ message: 'Failed to get device token for push notification' });
+        // }
+          const title = "Product Deleted";
+          const body = `The product watchis Whaat is  has been deleted successfully.`;
+          await sendPushNotification(token, title, body);
           res.status(200).json({message : 'Card has been deleted'});
           
     }catch(error){

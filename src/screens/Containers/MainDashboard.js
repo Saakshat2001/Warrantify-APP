@@ -13,7 +13,13 @@ import Account from './Account';
 import { useNavigation } from '@react-navigation/native';
 import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
 import ProductSelectionScreen from './ProductSelectionScreen';
+
+import messaging from '@react-native-firebase/messaging';
+import PushNotification from 'react-native-push-notification';
+
 const MainDashboard = ({ navigation }) => {
+
+  const [token , setToken] = useState();
 
   const [loader , setLoader] = useState(true);
   const [cardInfo , setCardInfo] = useState([]);
@@ -24,16 +30,32 @@ const MainDashboard = ({ navigation }) => {
   const isFocused = useIsFocused();
  const navigationn = useNavigation();
 
-    const handleGear = () => {
-   console.log('in handle gear------>>>... ');
-   navigationn.navigate('Account')
-    }
+  
+
+ useEffect(() => {
+  requestUserPermission()
+  getDeviceToken()
+//   const unsubscribe = messaging().onMessage(async remoteMessage => {
+//     PushNotification.localNotification({
+//       title: 'product info', // Notification title
+//       message: remoteMessage.notification.body, // Notification body
+//       priority: 'high',
+//     });
+//    // Show notification or handle it here
+//    // Alert.alert(remoteMessage.notification.title, remoteMessage.notification.body);
+//   });
+
+// //  Cleanup
+//  return () => unsubscribe();
+} , [])
+     const handleGear = () => {
+         navigationn.navigate('Account')
+        }
 
       const renderCards = (cardInfo) => {
 
-        console.log('in handle gear _--------->>>>>>> ');
        return cardInfo.map(element => {
-        console.log('in handle gear _--------->>>>>>> ' , element.product);
+        //console.log('in handle gear _--------->>>>>>> ' , element.product , token);
         if(element.product === 'Air Conditioner')
           element.imageUrl = require('./assets/ac.png');
         else if(element.product === 'Battery')
@@ -53,46 +75,72 @@ const MainDashboard = ({ navigation }) => {
       }
      
       const handleEditPress = async(element) => {
-        console.log('element ------------ ',element );
         navigation.navigate('ProductSelectionScreen' , {
             modifyElement : element
         })
       }
-      const handleDeleteCard = async(element) => {
-     
-        console.log('in card array props _=>>>>>,,,,,.>>>>>>>>>>>'  , `${ApiEndpoints.deleteCard}/${element._id}`);
+      
+      messaging().onMessage(async remoteMessage => {
+        console.log('Foreground Notification: ------------------------>>..>>>>>>>>>>>>. ', currentUser.name );
+        PushNotification.removeAllDeliveredNotifications();
+        setTimeout(() => {
+          PushNotification.localNotification({
+            title: remoteMessage.notification.title, // Notification title
+            message: `Hi ${currentUser.name} your card has been deleted.`, // Notification body
+            priority: 'high',
+          });
+        }, 1000); // Introduce a short delay
+       
+        // Display notification manually (you can use any custom UI or Alert)
+      //  Alert.alert(remoteMessage.notification.title, remoteMessage.notification.body);
+      });
 
-      //  const userId ={userId: currentUser?._id}
+      const requestUserPermission = async () => {
+        const authorizationStatus = await messaging().requestPermission();
+        if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED || authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL) {
+          console.log('Notification permission granted');
+        } else {
+          console.log('Notification permission denied');
+        }
+      };
+      const getDeviceToken = async () => {
+        const token = await messaging().getToken();
+        console.log('Device token:', token);
+        setToken(token);
+        return token;
+      };
+
+      const handleDeleteCard = async(element) => {
       try{
-        const res = await fetch(`${ApiEndpoints.deleteCard}/${element._id}`,
-            { method: 'DELETE'}
+    //    console.log('in handle delete 8********************** ' , `http://192.168.10.47:3000/api/product/deleteCard/${element._id}` , token);
+        
+      //  const res = await fetch(`${ApiEndpoints.deleteCard}/${element._id}`,
+        const res = await fetch(`http://10.107.35.248:3000/api/product/deleteCard/${element._id}`,
+            { method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,  // Add the token here
+            },
+          }
         );
-        console.log('res ------_>>>>>>>>> ' , res);
        // setDeleteModalVisible(false);
         if (res.ok) {
         const data = await res.json();
         setIsHandleDeleteCalled(true);
-        console.log('sab theek');
         }
         if (res.status === 404) {
          Alert.alert(data.message);
          // return dispatch(signInFailure(data.message));
-        }
-        console.log('res  ' , res);
-       
+        } 
       } catch (error) {
         console.log('here in catch of Main Dashboard' , error);
       }
-       // AsyncStorage.clear();
-        // navigation.navigate('Login')
-        // console.log("User logged out"); // Implement actual logout logic here
     };
   
     useEffect(() => {
 
      const fetchProduct = async () => {
      try {
-      console.log('isme <><><><><>><><> ',currentUser?._id);
       const userId ={userId: currentUser?._id}
       const res = await fetch(`${ApiEndpoints.fetchProductByUser}/${currentUser._id}`);
       const data = await res.json();

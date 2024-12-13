@@ -76,9 +76,8 @@ console.log('prod name' , route.params);
   };
 
   const handleCardPress = (item) => {
-    console.log('Warranty period:', item.name);
+
     let warrantyEndDate  = addDurationToDate(route.params.purchaseDate , item.name);
-    console.log('warrantyEndDatee +================ ' , route.params?.modifyElement);
     navigation.navigate('ProductInfo', {
         // productId: item.id,
         product: route.params.productName,
@@ -90,7 +89,7 @@ console.log('prod name' , route.params);
       });
 
   };
-// let t = ``
+
   return (
     <View style={ProductSelectionStyles.container}>
       {/* Title Bar */}

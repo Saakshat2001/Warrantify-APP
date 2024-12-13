@@ -18,7 +18,7 @@ const PurchaseDateScreen = ({ navigation, route }) => {
   };
 
   const handleContinuePress = () => {
-            console.log('route is ---------',route);
+          
             let editCard = false;
             if(route?.params?.modifyElement !== undefined)
               editCard = true;
@@ -39,16 +39,14 @@ const PurchaseDateScreen = ({ navigation, route }) => {
 
   // Handler for date selection
   const onDateSelect = (day) => {
-    console.log('day ============', day);
     setDisabled(false);
     // Extracting the date components
     const [year, month, date] = day.dateString.split('-'); // Splitting the 'YYYY-MM-DD' format
   
-    // Formatting to 'DD-MM-YYYY'
     const formattedDate = `${date}-${month}-${year}`;
     setFormattedDate(formattedDate)
     setSelectedDate(day.dateString);
-    console.log('Selected Date:', formattedDate);
+   // console.log('Selected Date:', formattedDate);
   };
 
   return (

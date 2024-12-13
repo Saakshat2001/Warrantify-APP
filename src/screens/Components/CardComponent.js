@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TouchableWithoutFeedback, Keyboard ,Button , Alert} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TouchableWithoutFeedback, Keyboard,Linking ,Button , Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Importing from react-native-vector-icons
 import normalize from 'react-native-normalize';
 import {ApiEndpoints} from '../../../src/Globals/ApiEndpoints'
 import { ScrollView } from 'react-native-gesture-handler';
 import ProductSelectionScreen from '../Containers/ProductSelectionScreen';
 import { useNavigation } from '@react-navigation/native';
+
 
 const WarrantyCard = ({cardArray , onDelete , onEditPress}) => {
 
@@ -15,19 +16,17 @@ const WarrantyCard = ({cardArray , onDelete , onEditPress}) => {
     const [isModalVisible, setDeleteModalVisible] = useState(false);
       // console.log('props are ++++++++++++++++++ ' ,cardArray);
        
+      const handleCallPress = () => {
+        // Open dialer with the dealer's contact number
+        const phoneNumber = `tel:+91${cardArray.dealerContactNumber}`;
+        Linking.openURL(phoneNumber).catch((err) => console.error('Failed to open dialer:', err));
+      };
     
   const handleDelete = async () => {
     await onDelete(); // Call the onDelete function passed from the parent
-    //hideModal(); // Close the modal
     setDeleteModalVisible(false);
   };
 
-  const handleEditPress = (element) => {
-    console.log('edit press', element);
-
-    //navigation.navigate('ProductSelectionScreen')
-    
-  }
 
     const handleDeletePress = () => {
         setDeleteModalVisible(true);
@@ -78,10 +77,14 @@ const WarrantyCard = ({cardArray , onDelete , onEditPress}) => {
                      <View style={styles.modalContainer}>
                          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                              <View style={styles.modalContent}>
-                                 <Text style={styles.modalText}>Support Information</Text>
-                                 <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                 <Text style={styles.closeButton}>Close</Text>
-                                 </TouchableOpacity>
+                             <TouchableOpacity onPress={handleCallPress} style={styles.callButton}>
+                            <Icon name="call" size={30} color="blue" /> 
+                            <Text style={styles.callText}>Call Dealer</Text> 
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => setModalVisible(false)}   style={styles.callButton}>
+                            <Text style={styles.callText}>Close</Text> 
+                            </TouchableOpacity>
                              </View>
                          </TouchableWithoutFeedback>
                      </View>
@@ -224,6 +227,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'blue',
     },
+    callButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      callText: {
+        fontSize: 18,
+        color: 'blue',
+        marginLeft: 10,
+      },
 
     //----------------
     delteModalContainer: {
